@@ -212,11 +212,12 @@ This project is made available under the [Apache 2.0 license](LICENSE).
 If you find this project useful for your research, please consider citing our paper:
 
 ```bibtex
-@misc{xiaojie2023fgkvmem,
-      title={Fine-grained Key-Value Memory Enhanced Predictor for Video Representation Learning}, 
-      author={Li, Xiaojie and Wu, Jianlog and He, Shaowei and Kang, Shuo and Yu, Yue and Nie, Liqiang and Zhang, Min},
-      year={2023},
-      booktitle={Proceedings of the 31th ACM International Conference on Multimedia},
+@inproceedings{li2023fine,
+  title={Fine-grained Key-Value Memory Enhanced Predictor for Video Representation Learning},
+  author={Li, Xiaojie and Wu, Jianlong and He, Shaowei and Kang, Shuo and Yu, Yue and Nie, Liqiang and Zhang, Min},
+  booktitle={Proceedings of the 31st ACM International Conference on Multimedia},
+  pages={2264--2274},
+  year={2023}
 }
 ```
 

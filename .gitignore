@@ -6,7 +6,6 @@
 *.tar
 *.pth
 *tfevent*
-*.png
 *.pkl
 *.csv
 *.txt
