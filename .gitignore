@@ -1,0 +1,26 @@
+# Ignore Python bytecode cache files and directories
+*__pycache__/
+*.pyc
+
+# Ignore various file types
+*.tar
+*.pth
+*tfevent*
+*.png
+*.pkl
+*.csv
+*.txt
+*.log
+*.json
+
+# Ignore Jupyter Notebook checkpoints and working directories
+.ipynb_checkpoints/
+.ipynb*
+
+# Ignore specific directories
+work_dirs/
+data/
+build/
+slowfast.egg-info/
+pymp*/
+detectron2_repo/

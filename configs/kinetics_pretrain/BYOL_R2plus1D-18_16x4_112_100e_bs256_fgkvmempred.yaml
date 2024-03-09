@@ -1,0 +1,141 @@
+TASK: ssl
+TRAIN:
+  DATASET: kinetics
+  EVAL_PERIOD: 20
+  CHECKPOINT_PERIOD: 5
+  AUTO_RESUME: True
+  BATCH_SIZE: 256
+MODEL:
+  NUM_CLASSES: 256
+  MODEL_NAME: ContrastiveModel
+  ARCH: r2plus1d_shallow
+  LOSS_FUNC: contrastive_loss
+  DROPOUT_RATE: 0.0
+  HEAD_ACT: none
+  MODIFY_LAST: False
+RESNET:
+  DEPTH: 18
+  NUM_BLOCK_TEMP_KERNEL: [[1], [1], [1], [1]]
+  TRANS_FUNC: basic_transform_r2plus1d
+  STEM_FUNC: r2plus1d_stem
+CONTRASTIVE:
+  T: 0.5
+  DIM: 256 # 128 default, if changed, change nCls too
+  NUM_MLP_LAYERS: 2 # default 1
+  BN_MLP: True
+  BN_SYNC_MLP: True
+  MLP_DIM: 4096
+  SEQUENTIAL: True  # def fault
+  MOMENTUM: 0.996 # default 0.5
+  MOMENTUM_ANNEALING: True # default false
+  TYPE: byol # default mem
+  PREDICTOR_DEPTHS: [1]
+  PREDICTOR_TYPE: 'MemoryRecon'
+
+  LENGTH: 1000
+  NUM_CLASSES_DOWNSTREAM: 101
+  
+  
+  NORM_KEYS: False
+  #DELTA_CLIPS_MIN: 80.0
+  #DELTA_CLIPS_MAX: 120.0
+MEMORY:
+    DIM_SOURCE_MEM: 256
+    DIM_TARGET_MEM: 256
+
+    RADIUS: 16
+    N_MEMORY: 4096
+    N_HEAD: 1
+
+    
+
+    
+    AVERAGE_DIM: -1
+    USE_INPUT_PROJ: True
+    USE_OUTPUT_PROJ: False
+    NUM_MLP_LAYERS_IN: 2
+    NUM_MLP_LAYERS_OUT: 2
+
+    USE_SRC_RECON: True
+    USE_TAR_RECON: True
+    USE_ALIGN: True
+    KL_T: -2.
+
+    USE_SOURCE_MEM_CONTRASTIVE: False
+    USE_TARGET_MEM_CONTRASTIVE: False
+
+    ADDRESS_TYPE: "dot"
+    PREDICT_RESIDUAL: False
+    
+
+    
+    
+    
+
+    USE_SPARSE: False
+    SPARSE_TOPK: 500
+
+    # loss weight
+    LOSS_TARGET_MEM_CONTRASTIVE: 0.
+    LOSS_SOURCE_MEM_CONTRASTIVE: 0.
+
+    LOSS_SOURCE_RECON: 0.1
+    LOSS_TARGET_RECON: 0.1
+
+    LOSS_SOURCE_MEM_SPARSE: 0.001
+    LOSS_TARGET_MEM_SPARSE: 0.001
+
+    LOSS_PREDICT: 0.
+    LOSS_KL: 0.01
+    .
+    
+    
+    RECON_TYPE: 'mlp_v1'
+DATA:
+  NUM_FRAMES: 16
+  SAMPLING_RATE: 4
+  # NUM_FRAMES: 16 # dont forget to change these parameters in linear & finetuning configs
+  # SAMPLING_RATE: 4
+  TRAIN_CROP_NUM_TEMPORAL: 2  # default 1
+  TRAIN_CROP_NUM_SPATIAL: 1  # default 1
+  TRAIN_JITTER_SCALES_RELATIVE: [0.2, 0.766]
+  TRAIN_JITTER_ASPECT_RELATIVE: [0.75, 1.3333]
+  SSL_MOCOV2_AUG: True
+  SSL_COLOR_JITTER: True # default false
+  COLOR_RND_GRAYSCALE: 0.2 # default 0.0
+  SSL_COLOR_HUE: 0.15
+  SSL_COLOR_BRI_CON_SAT: [0.6, 0.6, 0.6] # default [0.4, 0.4, 0.4]
+  TRAIN_JITTER_SCALES: [128, 160]
+  TRAIN_CROP_SIZE: 112
+  TEST_CROP_SIZE: 128
+  INPUT_CHANNEL_NUM: [3]
+  PATH_LABEL_SEPARATOR: " "
+  DECODING_BACKEND: pyav
+BN:
+  USE_PRECISE_STATS: False
+  NUM_BATCHES_PRECISE: 200
+  WEIGHT_DECAY: 0.0
+  NUM_SYNC_DEVICES: 8
+  NORM_TYPE: "sync_batchnorm"
+  # NORM_TYPE: "sync_batchnorm_apex"
+SOLVER:
+  BASE_LR: 2.4
+  LARS_ON: True
+  BASE_LR_SCALE_NUM_SHARDS: True
+  LR_POLICY: cosine
+  MAX_EPOCH: 100
+  MOMENTUM: 0.9
+  WEIGHT_DECAY: 1e-6
+  WARMUP_EPOCHS: 10.0
+  WARMUP_START_LR: 0.001
+  OPTIMIZING_METHOD: sgd
+TEST:
+  ENABLE: False
+  DATASET: kinetics
+  BATCH_SIZE: 64
+DATA_LOADER:
+  NUM_WORKERS: 6
+  PIN_MEMORY: True
+NUM_GPUS: 8
+RNG_SEED: 0
+OUTPUT_DIR: ./work_dirs/kinetics/BYOL_R2plus1D-18_16x4_112_100e_bs256_fgkvmempred/
