@@ -2,14 +2,14 @@
 
 ![FGKVMemPred Framework](figs/framework.png)
 
-Welcome to the official repository of the "Fine-grained Key-Value Memory Enhanced Predictor for Video Representation Learning" research paper, presented at ACM Multimedia 2023. This codebase is designed to facilitate video representation learning by leveraging a novel Fine-grained Key-Value Memory (FGKVMem) approach, enhancing the predictive capabilities for video understanding tasks. Our implementation builds on the SlowFast architecture, extending it with our FGKVMemPred module to achieve superior performance in video representation tasks.
+This repository is the official implementation of "Fine-grained Key-Value Memory Enhanced Predictor for Video Representation Learning", presented at ACM Multimedia 2023. This codebase is designed to facilitate video representation learning by leveraging a novel Fine-grained Key-Value Memory Enhanced Predictor (FGKVMem) approach, enhancing the predictive capabilities for video understanding tasks. Our implementation builds on the SlowFast architecture, extending it with our FGKVMemPred module to achieve superior performance in video representation learning methods.
 
 > [**Fine-grained Key-Value Memory Enhanced Predictor for Video Representation Learning (ACM MM 2023)**](https://example.com/link-to-your-paper)  
 > Xiaojie Li^1,2, [Jianlong Wu](https://jlwu1992.github.io)*^1 (Corresponding Author), Shaowei He^1, Shuo Kang^3, [Yue Yu](https://yuyue.github.io)^2, [Liqiang Nie](https://liqiangnie.github.io)^1, [Min Zhang](https://zhangminsuda.github.io)^1  
 > ^1Harbin Institute of Technology, Shenzhen, ^2Peng Cheng Laboratory, ^3Sensetime Research
 
 
-## Installation Steps
+## 🔨 Installation
 
 To get started with our project, please follow these setup instructions:
 
@@ -54,11 +54,11 @@ To get started with our project, please follow these setup instructions:
    python setup.py build develop
    ```
 
-## Data Processing for Video Understanding Project
+## ➡️ Data Preparation
 
 This guide provides comprehensive steps for preparing the UCF101, HMDB51, and Kinetics400 datasets for use in the FGKVMemPred Video Understanding project. Follow these instructions to ensure your datasets are correctly formatted and ready for model training and evaluation.
 
-### UCF101 Dataset Preparation
+**✨ UCF101**
 1. **Download Videos:**
    - Acquire the UCF101 dataset from the [official source](https://www.crcv.ucf.edu/data/UCF101.php).
 
@@ -78,7 +78,7 @@ This guide provides comprehensive steps for preparing the UCF101, HMDB51, and Ki
    ln -s {your_path}/UCF101/ucfTrainTestlist/testlist01.txt {your_path}/UCF101/val.csv
    ```
 
-### HMDB51 Dataset Preparation
+**✨ HMDB51**
 1. **Download Videos:**
    - Obtain the HMDB51 dataset from its [official source](http://serre-lab.clps.brown.edu/resource/hmdb-a-large-human-motion-database/#Downloads).
 
@@ -97,7 +97,7 @@ This guide provides comprehensive steps for preparing the UCF101, HMDB51, and Ki
    python tools/dataset_tools/resize_videos.py {your_path}/HMDB51/ videos {your_path}/HMDB51/val.csv
    ```
 
-### Kinetics400 Dataset Preparation
+**✨ Kinetics400**
 1. **Download Videos:**
    - Download the Kinetics400 dataset using the [ActivityNet provided scripts](https://github.com/activitynet/ActivityNet/tree/master/Crawler/Kinetics).
 
@@ -112,26 +112,20 @@ This guide provides comprehensive steps for preparing the UCF101, HMDB51, and Ki
    python tools/dataset_tools/resize_videos.py {your_path}/Kinetics-400/ {split} {your_path}/Kinetics/kinetics_{split}/kinetics_{split}.csv
    ```
 
-### General Notes:
+**✨ Notes**
 - Ensure the `{your_path}` placeholder is replaced with the actual path to your datasets.
 - The CSV files should list video paths and their corresponding labels, formatted as `'video_path label'`.
 - The resizing step is crucial for standardizing input sizes across datasets, facilitating more efficient training and evaluation.
 
-By meticulously preparing your datasets according to these instructions, you'll set a solid foundation for leveraging the FGKVMemPred Video Understanding project in your video representation learning endeavors.
+## ➡️ Quick Start
 
-## Quick Start Guide
-
-Welcome to the FGKVMemPred Video Understanding project! Once you've set up your environment and prepared your datasets, you're ready to dive into model training and evaluation. Here's how to get started:
-
-### Environment Activation
-
-Before you begin, make sure to activate the `pytorch_env` Conda environment:
+Once you've set up your environment and prepared your datasets, you're ready to dive into model training and evaluation. Before you begin, make sure to activate the `pytorch_env` Conda environment:
 
 ```bash
 conda activate pytorch_env
 ```
 
-### Self-Supervised Training
+**🎈Pretraining**
 
 Our project utilizes the `dist_pretrain.sh` script for initiating self-supervised training sessions. This script requires you to specify several parameters:
 
@@ -161,7 +155,7 @@ For specific training configurations, refer to these examples (remember to adjus
   sh scripts/dist_pretrain.sh configs/ucf101/r3d18/BYOL_SlowR18_16x4_112_400e_bs64_lr1.2_r3d18_h1_mem4096_inproj_codealign_dino_dot_t0.05_synccenter.yaml 12345 4 /path/to/ucf101/csv /path/to/ucf101/videos
   ```
 
-### Model Evaluation
+**🎈Evaluation**
 
 To evaluate the performance of our self-supervised learning methods, we use action recognition as a downstream task. This involves initializing models with pre-trained parameters and either fine-tuning the entire network or conducting a linear probe.
 
@@ -186,14 +180,10 @@ These steps will guide you through both training and evaluating models with our 
 - **Perform Test Only:**
 We have `TRAIN.ENABLE` and `TEST.ENABLE` to control whether training or testing is required for the current job. If only testing is preferred, you can set the `TRAIN.ENABLE` to False, and do not forget to pass the path to the model you want to test to TEST.CHECKPOINT_FILE_PATH.
    ```
-   python tools/run_net.py \
-     --cfg $CONFIG \
-     DATA.PATH_TO_DATA_DIR $LIST_PATH \
-     TEST.CHECKPOINT_FILE_PATH $CHECKPOINT \
-     TRAIN.ENABLE False \
+   python tools/run_net.py --cfg $CONFIG DATA.PATH_TO_DATA_DIR $LIST_PATH TEST.CHECKPOINT_FILE_PATH $CHECKPOINT TRAIN.ENABLE False
    ```
 
-## Models and results
+## 📍Model Zoo
 
 | Model    |  Params (M)  | Pretraining Dataset |                                                    Pretrain                                                     |                                              Finetune on UCF101                                              |                                              Finetune on HMDB51                                              |                             LinearProbe on UCF101                              |                             LinearProbe on HMDB51                              |
 |:---------|:------------:|:-------------------:|:---------------------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------:|:------------------------------------------------------------------------------:|
@@ -203,11 +193,7 @@ We have `TRAIN.ENABLE` and `TEST.ENABLE` to control whether training or testing 
 | R3D-18   |     31.8     |       UCF101        |           [config](configs/ucf101_pretrain/BYOL_R3d-18_16x4_112_400e_bs64.yaml) / [model](https://drive.google.com/file/d/15j3h-NAueMwh7bGbF90ue0GouY8UXBXl/view?usp=sharing) / [log](https://drive.google.com/file/d/1PVXiH90S7vbvHUGGxvlGj7FDzZ47tqHn/view?usp=sharing)           |  84.1 /   [config](configs/finetune/finetune_R3D-18_syn_anyckpt_200e_mixup_lr0.2_preBN_warm5_drop0.5.yaml)   | 54.2 /     [config](configs/finetune/finetune_R3D-18_syn_anyckpt_200e_mixup_lr0.2_preBN_warm5_drop0.5.yaml)  |  68.9 /    [config](configs/linear/linear_R3D-18_syn_anyckpt_100e_lr0.1.yaml)  | 36.5 /    [config](configs/linear/linear_R3D-18_syn_anyckpt_100e_lr0.1.yaml )  |
 | R2+1D-18 |     14.4     |       UCF101        |  [config](configs/ucf101_pretrain/BYOL_R2plus1D-18_16x4_112_400e_bs64_fgkvmempred.yaml) / [model](https://drive.google.com/file/d/1wuGgu3NNThyAWWDHMkaTfN1doLgGYjsL/view?usp=sharing) / [log](https://drive.google.com/file/d/1NMyADycJxaSdbLOWrQ18KOIuZTR5jo2L/view?usp=sharing)    | 84.3 / [config](configs/finetune/finetune_R2plus1D-18_syn_anyckpt_200e_mixup_lr0.2_preBN_warm5_drop0.5.yaml) | 53.0 / [config](configs/finetune/finetune_R2plus1D-18_syn_anyckpt_200e_mixup_lr0.2_preBN_warm5_drop0.5.yaml) | 66.2 / [config](configs/linear/linear_R2plus1D-18_syn_anyckpt_100e_lr0.1.yaml) | 36.3 / [config](configs/linear/linear_R2plus1D-18_syn_anyckpt_100e_lr0.1.yaml) |
 
-## Licensing
-
-This project is made available under the [Apache 2.0 license](LICENSE).
-
-## Citing Our Work
+## ✏️ Citation
 
 If you find this project useful for your research, please consider citing our paper:
 
@@ -221,6 +207,10 @@ If you find this project useful for your research, please consider citing our pa
 }
 ```
 
-## Acknowledgments
+## 🔒 License
+
+This project is made available under the [Apache 2.0 license](LICENSE).
+
+## 👍 Acknowledgments
 
 Special thanks to the creators of [SlowFast](https://github.com/facebookresearch/SlowFast) for their pioneering work in video understanding. Our project builds upon their foundation, and we appreciate their contributions to the open-source community.
