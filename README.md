@@ -4,7 +4,7 @@
 
 This repository is the official implementation of "Fine-grained Key-Value Memory Enhanced Predictor for Video Representation Learning", presented at ACM Multimedia 2023. This codebase is designed to facilitate video representation learning by leveraging a novel Fine-grained Key-Value Memory Enhanced Predictor (FGKVMem) approach, enhancing the predictive capabilities for video understanding tasks. Our implementation builds on the SlowFast architecture, extending it with our FGKVMemPred module to achieve superior performance in video representation learning methods.
 
-> [**Fine-grained Key-Value Memory Enhanced Predictor for Video Representation Learning (ACM MM 2023)**](https://example.com/link-to-your-paper)  
+> [**Fine-grained Key-Value Memory Enhanced Predictor for Video Representation Learning (ACM MM 2023)**](https://github.com/xiaojieli0903/FGKVMemPred_video/blob/main/Fine%20grained%20Key%20Value%20Memory%20Enhanced%20Predictor%20for%20Video%20Representation%20Learning.pdf)  
 > Xiaojie Li^1,2, [Jianlong Wu](https://jlwu1992.github.io)*^1 (Corresponding Author), Shaowei He^1, Shuo Kang^3, [Yue Yu](https://yuyue.github.io)^2, [Liqiang Nie](https://liqiangnie.github.io)^1, [Min Zhang](https://zhangminsuda.github.io)^1  
 > ^1Harbin Institute of Technology, Shenzhen, ^2Peng Cheng Laboratory, ^3Sensetime Research
 
